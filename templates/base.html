@@ -29,8 +29,9 @@
   <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
   <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
   <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
   <!-- Template Main CSS File -->
+  
   <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
   {% endcompress %}
 
@@ -59,7 +60,7 @@
             <li><a href="{% url 'courses:courses' %}">Courses</a></li>
             <li><a href="{% url 'root:trainer' %}">Trainers</a></li>
             <li><a href="{% url 'root:contact' %}">Contact</a></li>
-            <li><a href={% url 'courses:cart' %}>Submit and pay {{ cart|length}}</a></li>
+            <li><a href={% url 'courses:cart' %}>style= "color:cyan; font-size:10px" {{ cart|length}}<i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
             <li class="dropdown"><a href="#"><span>Category</span> <i class="bi bi-chevron-down"></i></a>
               <ul>
                 {% category as category%}
