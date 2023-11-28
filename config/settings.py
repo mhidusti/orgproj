@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'compressor',
     'order',
     "payment",
+    "rest_framework",
 ]
 
 SITE_ID = 3

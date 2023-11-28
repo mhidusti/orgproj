@@ -247,8 +247,6 @@ class PaymentView(TemplateView):
         return redirect(request.path_info)
 
 
-    
-
 
 
 
