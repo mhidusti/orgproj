@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django_filters',
     'drf_yasg',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt',
 ]
 
 SITE_ID = 3
@@ -150,5 +151,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
 } 
