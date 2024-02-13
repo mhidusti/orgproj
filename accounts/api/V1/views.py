@@ -6,6 +6,11 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.views import TokenObtainPairView
+from django.shortcuts import get_object_or_404
+from .multi_threading import SendEmailWithThreading
+from mail_templated import EmailMessage
+
 
 
 class RegistrationView(GenericAPIView):
@@ -47,3 +52,53 @@ class DestroyAuthToken(APIView):
     def post(self, request, *args, **kwargs):
         request.user.auth_token.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+class Customejwtview(TokenObtainPairView):
+    serializer_class = CustomObtainPairSerializer
+    
+
+class ChangePasswordView(GenericAPIView):
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = PasswordChangeSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.check_old_password(request, serializer.validated_data)
+        serializer.set_new_password(request, serializer.validated_data)
+        token = serializer.create_new_token(request, serializer.validated_data)
+
+        return Response(data= {'detail':'password change successfully.', 'token':token.key}, status=status.HTTP_200_OK)
+    
+
+class ProfileView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = ProfileSerializer
+    queryset = Profile.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        profile = get_object_or_404(Profile, user=user)
+        serializer = self.serializer_class(profile)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+    
+
+    def put(self, request, *args, **kwargs):
+        user = request.user
+        profile = get_object_or_404(Profile, user=user)
+        serializer = self.serializer_class(profile, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+    
+
+class VerificationView(GenericAPIView):
+
+    def get(self, request, *args, **kwargs):
+        message=EmailMessage('email/email.html', "admin@test.ir",to=["test@test.com"])
+        # message.send()
+        email = SendEmailWithThreading(message)
+        email.start()
+        return Response({"detail" : "email sent for your verification...!"})

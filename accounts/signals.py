@@ -8,15 +8,6 @@ from .models import Profile, CustomeUser
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-
-
-
-@receiver(post_save, sender=Profile)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        user = CustomeUser.objects.get(email=instance.user.email)
-        user.is_verified = True
-        user.save()
     
 
 
