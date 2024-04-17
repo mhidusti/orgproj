@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build Django project
+      run: docker-compose up -d 
+    - name: Testcase
+      run: docker exec django sh -c "python manage.py test ."
+    - name: Pytest check
+      run: docker exec django sh -c "pytest ./courses/api/V1/tests.py"

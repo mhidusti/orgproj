@@ -7,8 +7,6 @@
 # from django.views.generic import FormView, CreateView, UpdateView, TemplateView
 
 
-
-
 # # def Login(request):
 # #     if request.user.is_authenticated:
 # #         return redirect('/')
@@ -17,7 +15,7 @@
 # #         return render(request,'registration/login.html', context={'form': form})
 # #     elif request.method == 'POST':
 # #             email = request.POST.get('email')
-# #             password = request.POST.get('password')      
+# #             password = request.POST.get('password')
 # #             user = authenticate(email=email, password=password)
 # #             if user is not None:
 # #                 login(request,user)
@@ -38,10 +36,7 @@
 #          if user is not None:
 #               login(self.request, user)
 #               return super().form_valid(form)
-         
-         
-     
-     
+
 
 # # @login_required
 # # def Logout(request):
@@ -74,26 +69,24 @@
 # #             else:
 # #                 messages.add_message(request, messages.ERROR, 'Invalid email or password')
 # #                 return redirect(request.path_info)
-            
+
 # class SignUpView(CreateView):
 #      template_name = 'registration/signup.html'
 #      form_class = CustomUserCreation
-#      success_url = '/accounts/login/' #'registration/login' 
+#      success_url = '/accounts/login/' #'registration/login'
 
 #      def form_valid(self, form):
 #         form.save()
 #         email = self.request.POST.get('email')
-#         password = self.request.POST.get('password1')   
+#         password = self.request.POST.get('password1')
 #         user = authenticate(email=email, password=password)
 #         if user is not None:
 #             login(self.request,user)
 #             return redirect('/accounts/edit-profile/%i'%(user.id-1))
-        
+
 #      def form_invalid(self, form):
 #         messages.add_message(self.request, messages.ERROR, 'Invalid email or password')
 #         return super().form_invalid(form)
-
-          
 
 
 # class EditProfileView(UpdateView):
@@ -102,7 +95,7 @@
 #     fields = [ 'user','first_name', 'last_name', 'image', 'phone', 'address']
 #     success_url = '/'
 
-            
+
 # # def edit_profile(request, pk):
 # #      if request.method == 'GET':
 # #           form = EditProfile()
@@ -113,11 +106,6 @@
 # #           if form.is_valid():
 # #                form.save()
 # #                return redirect('root:home')
-
-            
-        
-
-        
 
 
 # # Create your views here.

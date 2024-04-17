@@ -1,4 +1,4 @@
-from  threading import Thread
+from threading import Thread
 
 
 class SendEmailWithThreading(Thread):

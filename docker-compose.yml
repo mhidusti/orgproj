@@ -9,6 +9,8 @@ services:
    - .:/core
   ports:
    - "8000:8000"
+  depends_on:
+   - redis
 
  smtp4dev:
     image: rnwood/smtp4dev:v3
@@ -21,6 +23,39 @@ services:
         - smtp4dev-data:/smtp4dev
     environment:
       - ServerOptions__HostName=smtp4dev
+
+ master:
+    image: locustio/locust
+    ports:
+     - "8089:8089"
+    volumes:
+      - ./locust:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --master -H http://backend:8000
+  
+ worker:
+    image: locustio/locust
+    volumes:
+      - ./locust:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --worker --master-host master
+
+ redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --save 60 1 --loglevel warning
+
+ worker1:
+    build: .
+    command: celery -A config worker -l INFO
+    volumes:
+      - .:/core
+    depends_on:
+      - redis
+      - backend
+
+
 
 
 volumes:

@@ -181,7 +181,7 @@ class CourseView(viewsets.ModelViewSet):
 
 
 class CategoryView(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminOrReadOnly]
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
 

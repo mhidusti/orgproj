@@ -238,7 +238,7 @@ class CourseDetailView(DetailView):
         return redirect(request.path_info)
 
     
-class PaymentView(TemplateView):
+class PaymentView(LoginRequiredMixin,TemplateView):
     template_name = 'course/cart.html'
 
     def post(self, request, *args, **kwargs):
